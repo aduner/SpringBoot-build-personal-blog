@@ -15,7 +15,9 @@ main{
 footer{
     flex: 0 0 auto;
 }
-
+a{
+    color:#424949;
+}
 .m-padded-mini {
     padding: 0.2em !important;
 }

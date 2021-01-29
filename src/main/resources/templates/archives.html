@@ -1,151 +1,103 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
-
-<head th:replace="_fragments :: head(~{::title})">
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>归档</title>
-  <link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/semantic-ui/2.4.1/semantic.min.css">
-  <link rel="stylesheet" href="../static/css/typo.css">
-  <link rel="stylesheet" href="../static/css/animate.css">
-  <link rel="stylesheet" href="../static/lib/prism/prism.css">
-  <link rel="stylesheet" href="../static/lib/tocbot/tocbot.css">
-  <link rel="stylesheet" href="../static/css/me.css">
+<html lang="en" xmlns:th="">
+<head>
+    <title>归档</title>
+    <th:block th:replace="common_base::common_header"/>
 </head>
-
 <body>
+<th:block th:replace="common_base::common_nav(4)"></th:block>
 
-    <!-- 导航 -->
-    <nav class="ui inverted attached segment m-padded-tb-mini m-shadow-small">
-      <div class="ui container">
-          <div class="ui inverted secondary stackable menu">
-              <h2 class="ui blue header item">Blog</h2>
-              <a href="#" class=" m-item item m-mobile-hide">首页</a>
-              <a href="#" class="m-item item m-mobile-hide">分类</a>
-              <a href="#" class="m-item item m-mobile-hide">标签</a>
-              <a href="#" class="m-item item m-mobile-hide">归档</a>
-              <a href="#" class="m-item item m-mobile-hide">关于我</a>
-              <div class="right m-item item m-mobile-hide">
-                  <div class="ui icon inverted transparent input m-margin-tb-tiny">
-                      <input type="text" placeholder="Search....">
-                      <i class="search link icon"></i>
-                  </div>
-              </div>
-          </div>
-      </div>
-      <a href="#" class="ui menu toggle black icon button m-right-top m-mobile-show">
-          <i class="sidebar icon"></i>
-      </a>
-  </nav>
-
-
-  <main>
+<main>
     <div  class="m-container-small m-padded-tb-big">
-      <div class="ui container">
-        <!--header-->
-        <div class="ui top attached padded segment">
-          <div class="ui middle aligned two column grid">
-            <div class="column">
-              <h3 class="ui blue header">归档</h3>
+        <div class="ui container">
+            <!--header-->
+            <div class="ui top attached padded segment">
+                <div class="ui middle aligned two column grid">
+                    <div class="column">
+                        <h3 class="ui blue header">归档</h3>
+                    </div>
+                    <div class="right aligned column">
+                        共 <h2 class="ui orange header m-inline-block m-text-thin"> 114 </h2> 篇博客
+                    </div>
+                </div>
             </div>
-            <div class="right aligned column">
-              共 <h2 class="ui orange header m-inline-block m-text-thin"> 114 </h2> 篇博客
+
+            <h3 class="ui center aligned header">2021</h3>
+            <div class="ui fluid vertical menu">
+                <a href="#" target="_blank" class="item">
+            <span>
+              关于刻意练习的清单
+              <div class="ui blue basic left label m-padded-mini ">9月03</div>
+            </span>
+                    <div class="ui orange basic left label m-padded-mini ">原创</div>
+                </a>
+                <a href="#" target="_blank" class="item">
+            <span>
+              关于刻意练习的清单
+              <div class="ui blue basic left label m-padded-mini ">9月03</div>
+            </span>
+                    <div class="ui orange basic left label m-padded-mini ">原创</div>
+                </a>
+                <a href="#" target="_blank" class="item">
+            <span>
+              关于刻意练习的清单
+              <div class="ui blue basic left label m-padded-mini ">9月03</div>
+            </span>
+                    <div class="ui orange basic left label m-padded-mini ">原创</div>
+                </a>
+                <a href="#" target="_blank" class="item">
+            <span>
+              关于刻意练习的清单
+              <div class="ui blue basic left label m-padded-mini ">9月03</div>
+            </span>
+                    <div class="ui orange basic left label m-padded-mini ">原创</div>
+                </a>
             </div>
-          </div>
+
+            <h3 class="ui center aligned header">2016</h3>
+            <div class="ui fluid vertical menu">
+                <a href="#" target="_blank" class="item">
+            <span>
+              关于刻意练习的清单
+              <div class="ui blue basic left label m-padded-mini ">9月03</div>
+            </span>
+                    <div class="ui orange basic left label m-padded-mini ">原创</div>
+                </a>
+                <a href="#" target="_blank" class="item">
+            <span>
+              关于刻意练习的清单
+              <div class="ui blue basic left label m-padded-mini ">9月03</div>
+            </span>
+                    <div class="ui orange basic left label m-padded-mini ">原创</div>
+                </a>
+                <a href="#" target="_blank" class="item">
+            <span>
+              关于刻意练习的清单
+              <div class="ui blue basic left label m-padded-mini ">9月03</div>
+            </span>
+                    <div class="ui orange basic left label m-padded-mini ">原创</div>
+                </a>
+                <a href="#" target="_blank" class="item">
+            <span>
+              关于刻意练习的清单
+              <div class="ui blue basic left label m-padded-mini ">9月03</div>
+            </span>
+                    <div class="ui orange basic left label m-padded-mini ">原创</div>
+                </a>
+            </div>
+
+
         </div>
-  
-        <h3 class="ui center aligned header">2021</h3>
-        <div class="ui fluid vertical menu">
-          <a href="#" target="_blank" class="item">
-            <span>
-              关于刻意练习的清单 
-              <div class="ui blue basic left label m-padded-mini ">9月03</div>
-            </span>
-            <div class="ui orange basic left label m-padded-mini ">原创</div>
-          </a>
-          <a href="#" target="_blank" class="item">
-            <span>
-              关于刻意练习的清单
-              <div class="ui blue basic left label m-padded-mini ">9月03</div>
-            </span>
-            <div class="ui orange basic left label m-padded-mini ">原创</div>
-          </a>
-          <a href="#" target="_blank" class="item">
-            <span>
-              关于刻意练习的清单
-              <div class="ui blue basic left label m-padded-mini ">9月03</div>
-            </span>
-            <div class="ui orange basic left label m-padded-mini ">原创</div>
-          </a>
-          <a href="#" target="_blank" class="item">
-            <span>
-              关于刻意练习的清单
-              <div class="ui blue basic left label m-padded-mini ">9月03</div>
-            </span>
-            <div class="ui orange basic left label m-padded-mini ">原创</div>
-          </a>
-        </div>
-  
-        <h3 class="ui center aligned header">2016</h3>
-        <div class="ui fluid vertical menu">
-          <a href="#" target="_blank" class="item">
-            <span>
-              关于刻意练习的清单
-              <div class="ui blue basic left label m-padded-mini ">9月03</div>
-            </span>
-            <div class="ui orange basic left label m-padded-mini ">原创</div>
-          </a>
-          <a href="#" target="_blank" class="item">
-            <span>
-              关于刻意练习的清单
-              <div class="ui blue basic left label m-padded-mini ">9月03</div>
-            </span>
-            <div class="ui orange basic left label m-padded-mini ">原创</div>
-          </a>
-          <a href="#" target="_blank" class="item">
-            <span>
-              关于刻意练习的清单
-              <div class="ui blue basic left label m-padded-mini ">9月03</div>
-            </span>
-            <div class="ui orange basic left label m-padded-mini ">原创</div>
-          </a>
-          <a href="#" target="_blank" class="item">
-            <span>
-              关于刻意练习的清单
-              <div class="ui blue basic left label m-padded-mini ">9月03</div>
-            </span>
-            <div class="ui orange basic left label m-padded-mini ">原创</div>
-          </a>
-        </div>
-  
-  
-      </div>
     </div>
-  </main>
+</main>
 
 
-    <!--底部footer-->
-    <footer  class="ui inverted vertical segment">
-      <div class="ui center aligned container">
-          <p class="m-text-thin m-text-spaced m-opacity-tiny">Copyright © 2016 - 2021 Lirenmi Designed by Lirenmi</p>
-      </div>
-
-  </footer>
-
-  <!--/*/<th:block th:replace="_fragments :: script">/*/-->
-  <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-  <script src="https://cdn.bootcdn.net/ajax/libs/semantic-ui/2.4.1/semantic.min.js"></script>
-  <script>
+<th:block th:replace="common_base::common_footer"></th:block>
+<th:block th:replace="common_base::common_js"></th:block>
+<script>
     $('.menu.toggle').click(function () {
-      $('.m-item').toggleClass('m-mobile-hide');
+        $('.m-item').toggleClass('m-mobile-hide');
     });
-
-  </script>
-  <!--/*/</th:block>/*/-->
-
-
-
-
+</script>
 </body>
-
 </html>

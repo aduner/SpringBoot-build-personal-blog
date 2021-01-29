@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <th:block th:fragment="common_header">
+        <!-- Common styles -->
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/semantic-ui/2.4.1/semantic.min.css">
+        <link rel="stylesheet" th:href="@{/css/me.css}">
+    </th:block>
+</head>
+<body>
+<th:block th:fragment="common_nav(n)">
+    <!-- 导航 -->
+    <nav class="ui inverted attached segment m-padded-tb-mini m-shadow-small">
+        <div class="ui container">
+            <div class="ui inverted secondary stackable menu">
+                <h2 class="ui blue header item">Blog</h2>
+                <a href="#" th:href="home" class=" m-item item m-mobile-hide" th:classappend="${n==1} ? 'active'">首页</a>
+                <a href="#" th:href="types" class="m-item item m-mobile-hide" th:classappend="${n==2} ? 'active'">分类</a>
+                <a href="#" th:href="tags" class="m-item item m-mobile-hide" th:classappend="${n==3} ? 'active'">标签</a>
+                <a href="#" th:href="archives" class="m-item item m-mobile-hide" th:classappend="${n==4} ? 'active'">归档</a>
+                <a href="#" th:href="about" class="m-item item m-mobile-hide" th:classappend="${n==5} ? 'active'">关于我</a>
+                <div class="right m-item item m-mobile-hide">
+                    <div class="ui icon inverted transparent input m-margin-tb-tiny">
+                        <input type="text" placeholder="Search....">
+                        <i class="search link icon"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <a href="#" class="ui menu toggle black icon button m-right-top m-mobile-show">
+            <i class="sidebar icon"></i>
+        </a>
+    </nav>
+</th:block>
+<th:block th:fragment="common_footer">
+    <footer  class="ui inverted vertical segment">
+        <div class="ui center aligned container">
+            <p class="m-text-thin m-text-spaced m-opacity-tiny">Copyright © 2021 - 2022 Aduner Designed by Aduner</p>
+        </div>
+    </footer>
+</th:block>
+<th:block th:fragment="common_js">
+    <!-- Common scripts -->
+    <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdn.bootcdn.net/ajax/libs/semantic-ui/2.4.1/semantic.min.js"></script>
+</th:block>
+</body>
+</html>
