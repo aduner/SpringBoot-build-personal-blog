@@ -21,7 +21,7 @@ public class PoComment {
     @Temporal(TemporalType.TIMESTAMP)
     private Date createTime;
     @ManyToOne
-    private PoBlog poBlog;
+    private PoBlog blog;
     @ManyToOne
     private PoComment replyComment;
     @OneToMany(mappedBy = "replyComment")

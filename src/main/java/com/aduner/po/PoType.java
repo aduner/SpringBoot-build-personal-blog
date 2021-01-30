@@ -14,6 +14,10 @@ public class PoType {
     @GeneratedValue
     private Long id;
     private String name;
-    @OneToMany(mappedBy = "poType")
+    @OneToMany(mappedBy = "type")
     private List<PoBlog> poBlogs=new ArrayList<>();
+
+    public Long getId() {
+        return id;
+    }
 }

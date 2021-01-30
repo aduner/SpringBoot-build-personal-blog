@@ -22,18 +22,20 @@ public class PoBlog {
     private Integer commentsCount;
     private boolean appreciation;
     private boolean copyright;
-    private boolean comments;
+    private boolean comment;
     private boolean published;
+    private boolean recommend;
     @Temporal(TemporalType.TIMESTAMP)
     private Date creationTime;
     @Temporal(TemporalType.TIMESTAMP)
     private Date updateTime;
     @ManyToOne
-    private PoType poType;
+    private PoType type;
     @ManyToMany(cascade = {CascadeType.PERSIST})
-    private List<PoTag> poTags=new ArrayList<>();
+    private List<PoTag> tags =new ArrayList<>();
     @ManyToOne
-    private PoUser poUser;
-    @OneToMany(mappedBy = "poBlog")
-    private List<PoComment> poComments=new ArrayList<>();
+    private PoUser user;
+    @OneToMany(mappedBy = "blog")
+    private List<PoComment> comments =new ArrayList<>();
+
 }

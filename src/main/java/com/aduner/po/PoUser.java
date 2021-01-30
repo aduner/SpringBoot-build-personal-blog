@@ -24,7 +24,7 @@ public class PoUser {
     private Date creationTime;
     @Temporal(TemporalType.TIMESTAMP)
     private Date updateTime;
-    @OneToMany(mappedBy = "poUser")
+    @OneToMany(mappedBy = "user")
     private List<PoBlog> poBlogs=new ArrayList<>();
 
 }

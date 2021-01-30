@@ -3,11 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
-    <th:block th:replace="base::common_header"/>
+    <th:block th:replace="common_base::common_header"/>
 </head>
 <body>
 
-<th:block th:replace="base::common_nav(6)"></th:block>
+<th:block th:replace="common_base::common_nav(6)"></th:block>
 
     <mian class="m-container m-padded-tb-big">
         <div class="m-container-small m-padded-tb-massive">
@@ -20,8 +20,8 @@
         </div>
     </mian>
 
-<th:block th:replace="base::common_footer"></th:block>
-<th:block th:replace="base::common_js"></th:block>
+<th:block th:replace="common_base::common_footer"></th:block>
+<th:block th:replace="common_base::common_js"></th:block>
 <div>
     <div th:utext="'&lt;!--'" th:remove="tag"></div>
     <div th:utext="'Failed Request URL : ' + ${url}" th:remove="tag">

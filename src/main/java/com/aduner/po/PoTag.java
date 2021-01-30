@@ -14,6 +14,6 @@ public class PoTag {
     @GeneratedValue
     private Long id;
     private String name;
-    @ManyToMany(mappedBy = "poTags")
+    @ManyToMany(mappedBy = "tags")
     private List<PoBlog> poBlogs=new ArrayList<>();
 }

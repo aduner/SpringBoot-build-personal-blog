@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>博客分类管理</title>
+    <th:block th:replace="common_base::common_header"/>
+</head>
+<body>
+
+<!-- 导航 -->
+<th:block th:replace="admin/administrator_base::administrator_nav(2)"></th:block>
+<main>
+
+    <!--中间内容-->
+    <div class="m-container-small m-padded-tb-big">
+        <div class="ui container">
+            <div class="ui error message" th:unless="${#strings.isEmpty(error)}">
+                <i class="close icon"></i>
+                <div class="header"></div>
+                <p th:text="${error}"></p>
+            </div>
+            <table class="ui celled table">
+                <thead>
+                <tr>
+                    <th></th>
+                    <th>标题</th>
+                    <th>操作</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="type,iterStat: ${page.content}">
+                    <td th:text="${iterStat.count}"></td>
+                    <td th:text="${type.name}"></td>
+                    <td>
+                        <a href="#" th:href="@{/admin/types/delete(id=${type.id})}"
+                           class="ui mini red basic button">删除</a>
+                    </td>
+                </tr>
+                </tbody>
+
+                <tfoot>
+                <tr>
+                    <th colspan="6" th:if="${page.totalPages}>1">
+                        <div class="ui mini pagination menu">
+                            <a th:href="@{/admin/types(page=${page.number}-1)}" class="  item"
+                               th:unless="${page.first}">上一页</a>
+                            <a th:href="@{/admin/types(page=${page.number}+1)}" class=" item" th:unless="${page.last}">下一页</a>
+                        </div>
+                    </th>
+                </tr>
+                </tfoot>
+            </table>
+            <a class="ui mini right floated blue basic button add_type">新增</a>
+        </div>
+    </div>
+
+    <form class="ui form grid ui modal add_type_modal" method="post" th:action="@{/admin/types/add}"
+          style="max-width: 20em !important;">
+        <div class="ui segment eleven">
+            <div class="field">
+                <div class="ui left icon input">
+                    <input type="text" name="name" placeholder="分类名称">
+                </div>
+            </div>
+            <button class="ui fluid large blue submit button">添加</button>
+        </div>
+    </form>
+
+</main>
+
+
+<!--底部footer-->
+<th:block th:replace="common_base::common_footer"></th:block>
+<th:block th:replace="common_base::common_js"></th:block>
+<script>
+    $('.add_type').click(function () {
+        $('.ui.modal.add_type_modal')
+            .modal('show')
+        ;
+    })
+
+
+    $('.menu.toggle').click(function () {
+        $('.m-item').toggleClass('m-mobile-hide');
+    });
+
+    $('.ui.dropdown').dropdown({
+        on: 'hover'
+    });
+    $('.ui.form').form({
+        fields: {
+            name: {
+                identifier: 'name',
+                rules: [{
+                    type: 'empty',
+                    prompt: '不可为空'
+                }]
+            }
+        }
+    });
+    //消息提示关闭初始化
+    $('.message .close')
+        .on('click', function () {
+            $(this)
+                .closest('.message')
+                .transition('fade');
+        });
+</script>
+</body>
+</html>

@@ -4,7 +4,6 @@ import com.aduner.po.PoUser;
 import com.aduner.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.util.DigestUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -33,7 +32,7 @@ public class LoginController {
         if (user != null) {
             user.setPassword(null);
             session.setAttribute("user", user);
-            return "admin/blogs";
+            return "redirect:/admin/blogs";
         } else {
             attributes.addFlashAttribute("message", "用户名或密码错误");
             return "redirect:/admin";
