@@ -20,13 +20,14 @@
     <div class="m-container-small m-padded-tb-big">
         <div class="ui container">
             <form id="blog-form" th:action="@{/admin/editor}" action="#" method="post" class="ui form">
+                <input type="hidden" name="id" th:value="${blog.id}">
                 <input type="hidden" name="published">
                 <div class="required field">
                     <div class="ui left labeled input">
                         <div class="ui selection compact blue basic dropdown label">
                             <input type="hidden" name="flag" value="1">
                             <i class="dropdown icon"></i>
-                            <div class="text">原创</div>
+                            <div class="text flagText">原创</div>
                             <div class="menu">
                                 <div class="item" data-value="1">原创</div>
                                 <div class="item" data-value="2">转载</div>
@@ -37,7 +38,7 @@
                     </div>
                 </div>
 
-                <input type="hidden" id="blog-content" name="content" placeholder="正文">
+                <input type="hidden" id="blog-content" name="content" placeholder="正文" th:value="${blog.content}">
                 <div class="field">
                     <div id="editor"></div>
                 </div>
@@ -94,7 +95,7 @@
                     </div>
                     <div class="field">
                         <div class="ui checkbox">
-                            <input type="checkbox" id="comment" name="comment" checked class="hidden">
+                            <input type="checkbox" id="comment" name="comment" class="hidden">
                             <label for="comment">评论</label>
                         </div>
                     </div>
@@ -111,6 +112,7 @@
             </form>
         </div>
     </div>
+
 
 </main>
 <!--底部footer-->
@@ -177,7 +179,20 @@
             }
         }
     });
-
+</script>
+<script>
+    function initBlog(){
+        $("[name='title']").val('[[${blog.title}]]');
+        $("[name='flag']").val("[[${blog.flag}]]");
+        flagText=["原创","转载","翻译"]
+        $('.flagText').text(flagText["[[${blog.flag}]]"]);
+        if([[${blog.recommend}]]){$("[name='recommend']").click();}
+        if([[${blog.copyright}]]){$("[name='copyright']").click();}
+        if([[${blog.appreciation}]]){$("[name='appreciation']").click();}
+        if([[${blog.comment}]]){$("[name='comment']").click();}
+    };
+    initBlog();
+    editor.setMarkdown($("[name='content']").val(),false)
 </script>
 </body>
 

@@ -12,19 +12,11 @@
 <th:block th:replace="admin/administrator_base::administrator_nav(1)"></th:block>
 
 <main>
-    <div class="ui attached pointing menu">
-        <div class="ui container">
-            <div class="right menu">
-                <a href="#" class="item">发布</a>
-                <a href="#" class="blue active item">列表</a>
-            </div>
-        </div>
-    </div>
 
     <!--中间内容-->
     <div class="m-container-small m-padded-tb-big">
         <div class="ui container">
-            <div  class="ui secondary segment form">
+            <div  class="ui form">
                 <input type="hidden" name="page" >
                 <div class="inline fields">
                     <div class="field">
@@ -33,18 +25,15 @@
                     <div class="field">
                         <div class="ui labeled action input">
                             <div class="ui type selection dropdown">
-                                <input type="hidden" name="typeId">
+                                <input type="hidden" name="typeId" th:value="*{type}!=null ? ${type.id}">
                                 <i class="dropdown icon"></i>
                                 <div class="default text">分类</div>
                                 <div class="menu">
-                                    <div th:each="type : ${types}" class="item" data-value="1" th:data-value="${type.id}" th:text="${type.name}">错误日志</div>
-                                    <!--/*-->
-                                    <div class="item" data-value="2">开发者手册</div>
-                                    <!--*/-->
+                                    <div th:each="type : ${types}" class="item" data-value="1" th:data-value="${type.id}" th:text="${type.name}"></div>
                                 </div>
                             </div>
-                            <button id="clear-btn" class="ui compact button">clear</button>
                         </div>
+                        <button id="clear-btn" class="ui compact button">clear</button>
 
                     </div>
                     <div class="field">
@@ -72,16 +61,16 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr th:each="blog,iterStat: ${page.content}">
+                <tr th:each="blog,iterStat: ${page.content}" >
                     <td th:text="${iterStat.count}"></td>
                     <td th:text="${blog.title}"></td>
                     <td th:text="${blog.type.name}"></td>
                     <td th:text="${blog.recommend} ? '是':'否'"></td>
-                    <td th:text="${blog.published} ? '发布':'草稿'"></td>
+                    <td th:text="${blog.published} ? '发布':'草稿'"  th:style="${blog.published} ? 'color: #016936;':'color: #B03060;'"></td>
                     <td th:text="${blog.updateTime}"></td>
                     <td>
-                        <a href="#" class="ui mini blue basic button">编辑</a>
-                        <a href="#" class="ui mini red basic button">删除</a>
+                        <a href="#" class="ui mini blue basic button" th:href="@{update(id=${blog.id})}">编辑</a>
+                        <a href="#" class="ui mini red basic button delete_blog" th:blog-id="${blog.id}">删除</a>
                     </td>
                 </tr>
                 </tbody>
@@ -98,16 +87,30 @@
             </table>
 
         </div>
-            <a href="#" class="ui mini right floated blue basic button">新增</a>
+            <a href="#" th:href="@{/admin/new}" class="ui mini right floated blue basic button">新增</a>
         </div>
     </div>
 </main>
+<form class="ui form grid ui modal delete_blog_modal" method="post" th:action="@{/admin/blog/delete}"
+      style="max-width: 20em !important;">
+    <input name="id" type="hidden" id="delete-blog-id">
+    <button class="ui fluid large blue submit button">确认删除</button>
+    </div>
+</form>
 
 
 <!--底部footer-->
 <th:block th:replace="common_base::common_footer"></th:block>
 <th:block th:replace="common_base::common_js"></th:block>
 <script>
+    $('.delete_blog').click(function (e) {
+        $('.ui.modal.delete_blog_modal')
+            .modal('show')
+        ;
+        var id=$(e.target).attr('blog-id');
+        $('#delete-blog-id').val(id);
+    })
+
     $('.menu.toggle').click(function () {
         $('.m-item').toggleClass('m-mobile-hide');
     });
@@ -129,6 +132,7 @@
             $('.ui.type.dropdown')
                 .dropdown('clear')
             ;
+            $('[name="title"]').val("");
         })
     ;
 
@@ -142,7 +146,9 @@
         loaddata();
     });
     function loaddata() {
-        $("#table-container").load(/*[[@{/admin/blogs/search}]]*/"/admin/blogs/search",{
+        if($("[name='typeId']").val()=="")
+            $("[name='typeId']").val(0)
+        $("#table-container").load("[[@{/admin/blogs/search}]]",{
             title : $("[name='title']").val(),
             typeId : $("[name='typeId']").val(),
             recommend : $("[name='recommend']").prop('checked'),

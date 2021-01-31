@@ -1,14 +1,13 @@
 package com.aduner.web.admin;
 
-import com.aduner.po.PoType;
-import com.aduner.service.TypeService;
+import com.aduner.po.PoTag;
+import com.aduner.service.TagService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,36 +16,36 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 @RequestMapping("/admin")
-public class TypeController {
+public class TagController {
     @Autowired
-    private TypeService typeService;
+    private TagService tagService;
 
-    @GetMapping("/types")
-    public String blogTypes(
+    @GetMapping("/tags")
+    public String blogTags(
             @PageableDefault(
                     size = 10,
                     sort = {"id"},
                     direction = Sort.Direction.DESC)
                     Pageable pageable,
             Model model) {
-        model.addAttribute("page", typeService.listType(pageable));
-        return "admin/blog_types";
+        model.addAttribute("page", tagService.listTag(pageable));
+        return "admin/blog_tags";
     }
 
-    @PostMapping("/types/add")
-    public String addType(PoType type, RedirectAttributes attributes) {
-        type.setName(type.getName().strip());
-        if (typeService.getTagByName(type.getName())!= null) {
-            attributes.addFlashAttribute("error","该分类已存在");
-            return "redirect:/admin/types";
+    @PostMapping("/tags/add")
+    public String addTag(PoTag tag, RedirectAttributes attributes) {
+        tag.setName(tag.getName().strip());
+        if (tagService.getTagByName(tag.getName())!= null) {
+            attributes.addFlashAttribute("error","该标签已存在");
+            return "redirect:/admin/tags";
         }
-        PoType t = typeService.saveType(type);
-        return "redirect:/admin/types";
+        PoTag t = tagService.saveTag(tag);
+        return "redirect:/admin/tags";
     }
 
-    @GetMapping("/types/delete")
-    public String typesDelete(@RequestParam("id") Long id) {
-        typeService.deleteType(id);
-        return "redirect:/admin/types";
+    @GetMapping("/tags/delete")
+    public String tagsDelete(@RequestParam("id") Long id) {
+        tagService.deleteTag(id);
+        return "redirect:/admin/tags";
     }
 }

@@ -3,13 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>博客分类管理</title>
+    <title>博客标签管理</title>
     <th:block th:replace="common_base::common_header"/>
 </head>
 <body>
 
 <!-- 导航 -->
-<th:block th:replace="admin/administrator_base::administrator_nav(2)"></th:block>
+<th:block th:replace="admin/administrator_base::administrator_nav(3)"></th:block>
 <main>
 
     <!--中间内容-->
@@ -24,16 +24,16 @@
                 <thead>
                 <tr>
                     <th></th>
-                    <th>分类</th>
+                    <th>标签</th>
                     <th>操作</th>
                 </tr>
                 </thead>
                 <tbody>
-                <tr th:each="type,iterStat: ${page.content}">
+                <tr th:each="tag,iterStat: ${page.content}">
                     <td th:text="${iterStat.count}"></td>
-                    <td th:text="${type.name}"></td>
+                    <td th:text="${tag.name}"></td>
                     <td>
-                        <a href="#" th:href="@{/admin/types/delete(id=${type.id})}"
+                        <a href="#" th:href="@{/admin/tags/delete(id=${tag.id})}"
                            class="ui mini red basic button">删除</a>
                     </td>
                 </tr>
@@ -43,24 +43,24 @@
                 <tr>
                     <th colspan="6" th:if="${page.totalPages}>1">
                         <div class="ui mini pagination menu">
-                            <a th:href="@{/admin/types(page=${page.number}-1)}" class="  item"
+                            <a th:href="@{/admin/tags(page=${page.number}-1)}" class="  item"
                                th:unless="${page.first}">上一页</a>
-                            <a th:href="@{/admin/types(page=${page.number}+1)}" class=" item" th:unless="${page.last}">下一页</a>
+                            <a th:href="@{/admin/tags(page=${page.number}+1)}" class=" item" th:unless="${page.last}">下一页</a>
                         </div>
                     </th>
                 </tr>
                 </tfoot>
             </table>
-            <a class="ui mini right floated blue basic button add_type">新增</a>
+            <a class="ui mini right floated blue basic button add_tag">新增</a>
         </div>
     </div>
 
-    <form class="ui form grid ui modal add_type_modal" method="post" th:action="@{/admin/types/add}"
+    <form class="ui form grid ui modal add_tag_modal" method="post" th:action="@{/admin/tags/add}"
           style="max-width: 20em !important;">
         <div class="ui segment eleven">
             <div class="field">
                 <div class="ui left icon input">
-                    <input type="text" name="name" placeholder="分类名称">
+                    <input type="text" name="name" placeholder="标签名称">
                 </div>
             </div>
             <button class="ui fluid large blue submit button">添加</button>
@@ -74,8 +74,8 @@
 <th:block th:replace="common_base::common_footer"></th:block>
 <th:block th:replace="common_base::common_js"></th:block>
 <script>
-    $('.add_type').click(function () {
-        $('.ui.modal.add_type_modal')
+    $('.add_tag').click(function () {
+        $('.ui.modal.add_tag_modal')
             .modal('show')
         ;
     })

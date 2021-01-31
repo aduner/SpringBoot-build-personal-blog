@@ -5,6 +5,8 @@ import com.aduner.exception.NotFoundException;
 import com.aduner.po.PoBlog;
 import com.aduner.po.PoType;
 import org.springframework.beans.BeanUtils;
+import org.springframework.beans.BeanWrapper;
+import org.springframework.beans.BeanWrapperImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -15,6 +17,7 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
+import java.beans.PropertyDescriptor;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -59,12 +62,34 @@ public class BlogServiceImpl implements BlogService {
         PoBlog b = blogRepository.getOne(id);
         if (b == null)
             throw new NotFoundException("该博文不存在");
-        BeanUtils.copyProperties(b, blog);
-        return blogRepository.save(b);
+        BeanUtils.copyProperties(blog, b,MyBeanUtils.getNullPropertyNames(blog));
+        return blogRepository.save(blog);
     }
 
     @Override
     public void deleteBlog(Long id) {
         blogRepository.deleteById(id);
     }
+}
+class MyBeanUtils {
+
+
+    /**
+     * 获取所有的属性值为空属性名数组
+     * @param source
+     * @return
+     */
+    public static String[] getNullPropertyNames(Object source) {
+        BeanWrapper beanWrapper = new BeanWrapperImpl(source);
+        PropertyDescriptor[] pds =  beanWrapper.getPropertyDescriptors();
+        List<String> nullPropertyNames = new ArrayList<>();
+        for (PropertyDescriptor pd : pds) {
+            String propertyName = pd.getName();
+            if (beanWrapper.getPropertyValue(propertyName) == null) {
+                nullPropertyNames.add(propertyName);
+            }
+        }
+        return nullPropertyNames.toArray(new String[nullPropertyNames.size()]);
+    }
+
 }
