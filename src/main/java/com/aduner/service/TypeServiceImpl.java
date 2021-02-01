@@ -1,15 +1,18 @@
 package com.aduner.service;
 
 import com.aduner.dao.TypeRepository;
-import com.aduner.exception.NotFoundException;
+import com.aduner.po.PoBlog;
 import com.aduner.po.PoType;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -50,5 +53,23 @@ public class TypeServiceImpl implements TypeService {
     @Override
     public PoType getTagByName(String name) {
         return typeRepository.findByName(name);
+    }
+
+    @Override
+    public List<PoType> listTypeTop(Integer size) {
+        Sort sort = Sort.by(Sort.Direction.DESC,"blogs.size");
+        Pageable pageable = PageRequest.of(0,size,sort);
+        List<PoType> types=typeRepository.findTop(pageable);
+        // 排除非发布blog
+        for(PoType type:types){
+            List<PoBlog> needBlogs = new ArrayList<PoBlog>();
+            for(PoBlog blog:type.getBlogs()){
+                if(blog.isPublished()) {
+                    needBlogs.add(blog);
+                }
+            }
+            type.setBlogs(needBlogs);
+        }
+        return types;
     }
 }

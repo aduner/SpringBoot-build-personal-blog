@@ -15,7 +15,7 @@ public class PoType {
     private Long id;
     private String name;
     @OneToMany(mappedBy = "type")
-    private List<PoBlog> poBlogs=new ArrayList<>();
+    private List<PoBlog> blogs =new ArrayList<>();
 
     public Long getId() {
         return id;

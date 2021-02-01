@@ -21,4 +21,5 @@ public interface TagService {
 
     PoTag getTagByName(String name);
 
+    List<PoTag> listTagTop(Integer size);
 }

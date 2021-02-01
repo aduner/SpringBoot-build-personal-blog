@@ -20,12 +20,13 @@ public class PoBlog {
     @GeneratedValue
     private Long id;
     private String title;
-    @Basic(fetch = FetchType.LAZY)
-    @Lob
+    @Basic(fetch = FetchType.LAZY) //懒加载
+    @Lob //大文本
     private String content;
+    private String description;
     private String flag;
-    private Integer views;
-    private Integer commentsCount;
+    private Integer views=0;
+    private Integer commentsCount=0;
     private boolean appreciation;
     private boolean copyright;
     private boolean comment;

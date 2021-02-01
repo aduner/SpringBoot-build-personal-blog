@@ -19,4 +19,5 @@ public interface TypeService {
 
     PoType getTagByName(String name);
 
+    List<PoType> listTypeTop(Integer size);
 }

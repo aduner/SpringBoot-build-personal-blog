@@ -1,10 +1,14 @@
 package com.aduner.service;
 
 import com.aduner.dao.TagRepository;
+import com.aduner.po.PoBlog;
 import com.aduner.po.PoTag;
+import com.aduner.po.PoType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -65,5 +69,23 @@ public class TagServiceImpl implements TagService {
     @Override
     public PoTag getTagByName(String name) {
         return tagRepository.findByName(name);
+    }
+
+    @Override
+    public List<PoTag> listTagTop(Integer size) {
+        Sort sort= Sort.by(Sort.Direction.DESC,"blogs.size");
+        Pageable pageable= PageRequest.of(0,size,sort);
+        List<PoTag> tags=tagRepository.findTop(pageable);
+        // 排除非发布blog
+        for(PoTag tag:tags){
+            List<PoBlog> needBlogs = new ArrayList<PoBlog>();
+            for(PoBlog blog:tag.getBlogs()){
+                if(blog.isPublished()) {
+                    needBlogs.add(blog);
+                }
+            }
+            tag.setBlogs(needBlogs);
+        }
+        return tags;
     }
 }

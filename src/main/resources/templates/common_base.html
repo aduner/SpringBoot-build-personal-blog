@@ -16,11 +16,11 @@
         <div class="ui container">
             <div class="ui inverted secondary stackable menu">
                 <h2 class="ui blue header item">Blog</h2>
-                <a href="#" th:href="home" class=" m-item item m-mobile-hide" th:classappend="${n==1} ? 'active'">首页</a>
-                <a href="#" th:href="types" class="m-item item m-mobile-hide" th:classappend="${n==2} ? 'active'">分类</a>
-                <a href="#" th:href="tags" class="m-item item m-mobile-hide" th:classappend="${n==3} ? 'active'">标签</a>
-                <a href="#" th:href="archives" class="m-item item m-mobile-hide" th:classappend="${n==4} ? 'active'">归档</a>
-                <a href="#" th:href="about" class="m-item item m-mobile-hide" th:classappend="${n==5} ? 'active'">关于我</a>
+                <a href="#" th:href="@{home}" class=" m-item item m-mobile-hide" th:classappend="${n==1} ? 'active'">首页</a>
+                <a href="#" th:href="@{types}" class="m-item item m-mobile-hide" th:classappend="${n==2} ? 'active'">分类</a>
+                <a href="#" th:href="@{tags}" class="m-item item m-mobile-hide" th:classappend="${n==3} ? 'active'">标签</a>
+                <a href="#" th:href="@{archives}" class="m-item item m-mobile-hide" th:classappend="${n==4} ? 'active'">归档</a>
+                <a href="#" th:href="@{about}" class="m-item item m-mobile-hide" th:classappend="${n==5} ? 'active'">关于我</a>
                 <div class="right m-item item m-mobile-hide">
                     <div class="ui icon inverted transparent input m-margin-tb-tiny">
                         <input type="text" placeholder="Search....">
@@ -45,6 +45,11 @@
     <!-- Common scripts -->
     <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdn.bootcdn.net/ajax/libs/semantic-ui/2.4.1/semantic.min.js"></script>
+    <script>
+        $('.menu.toggle').click(function () {
+            $('.m-item').toggleClass('m-mobile-hide');
+        });
+    </script>
 </th:block>
 </body>
 </html>

@@ -15,5 +15,5 @@ public class PoTag {
     private Long id;
     private String name;
     @ManyToMany(mappedBy = "tags")
-    private List<PoBlog> poBlogs=new ArrayList<>();
+    private List<PoBlog> blogs =new ArrayList<>();
 }

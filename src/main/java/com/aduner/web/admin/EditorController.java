@@ -7,6 +7,7 @@ import com.aduner.po.PoUser;
 import com.aduner.service.BlogService;
 import com.aduner.service.TagService;
 import com.aduner.service.TypeService;
+import com.aduner.util.ExtractDescription;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -57,10 +58,11 @@ public class EditorController {
     }
 
     @PostMapping("/editor")
-    public String post(PoBlog blog, RedirectAttributes attributes, HttpSession session) {
+    public String editor(PoBlog blog, RedirectAttributes attributes, HttpSession session) {
         blog.setUser((PoUser) session.getAttribute("user"));
         blog.setType(typeService.getType(blog.getType().getId()));
         blog.setTags(tagService.listTag(blog.getTagIds()));
+        blog.setDescription(ExtractDescription.extract(blog.getDescription()));
         PoBlog b;
         if (blog.getId() == null) {
             b = blogService.saveBlog(blog);
