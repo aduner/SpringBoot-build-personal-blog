@@ -12,7 +12,11 @@ public interface BlogService {
 
     Page<PoBlog> listBlog(Pageable pageable, PoBlog blog);
 
+    Page<PoBlog> listPublishBlog(Pageable pageable, PoBlog blog);
+
     Page<PoBlog> listPublishBlog(Pageable pageable);
+
+    Page<PoBlog> listTagBlog(Pageable pageable,Long id);
 
     PoBlog saveBlog(PoBlog blog);
 

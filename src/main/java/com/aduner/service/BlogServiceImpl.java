@@ -1,16 +1,15 @@
 package com.aduner.service;
 
 import com.aduner.dao.BlogRepository;
+import com.aduner.dao.TagRepository;
 import com.aduner.exception.NotFoundException;
 import com.aduner.po.PoBlog;
+import com.aduner.po.PoTag;
 import com.aduner.po.PoType;
 import com.aduner.util.MyBeanUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.*;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
@@ -25,6 +24,9 @@ import java.util.List;
 public class BlogServiceImpl implements BlogService {
     @Autowired
     BlogRepository blogRepository;
+
+    @Autowired
+    TagRepository tagRepository;
 
     @Override
     public PoBlog getBlog(Long id) {
@@ -53,9 +55,45 @@ public class BlogServiceImpl implements BlogService {
     }
 
     @Override
+    public Page<PoBlog> listPublishBlog(Pageable pageable, PoBlog blog) {
+        return blogRepository.findAll(new Specification<PoBlog>() {
+            @Override
+            public Predicate toPredicate(Root<PoBlog> root, CriteriaQuery<?> cq, CriteriaBuilder cb) {
+                List<Predicate> predicates = new ArrayList<>();
+                if (!"".equals(blog.getTitle()) && blog.getTitle() != null) {
+                    predicates.add(cb.like(root.<String>get("title"), "%" + blog.getTitle() + "%"));
+                }
+                if (blog.getType() != null && blog.getType().getId() != null) {
+                    predicates.add(cb.equal(root.<PoType>get("type").get("id"), blog.getType().getId()));
+                }
+                predicates.add(cb.equal(root.<Boolean>get("published"),true));
+                cq.where(predicates.toArray(new Predicate[predicates.size()]));
+                return null;
+            }
+        }, pageable);
+    }
+
+    @Override
     public Page<PoBlog> listPublishBlog(Pageable pageable) {
         return blogRepository.findPublish(pageable);
     }
+
+    @Override
+    public Page<PoBlog> listTagBlog(Pageable pageable,Long id) {
+        PoTag tag = tagRepository.findById(id).get();
+        // 排除非发布blog
+        List<PoBlog> needBlogs = new ArrayList<PoBlog>();
+        for (PoBlog blog : tag.getBlogs()) {
+            if (blog.isPublished()) {
+                needBlogs.add(blog);
+            }
+        }
+        tag.setBlogs(needBlogs);
+        return new PageImpl<PoBlog>(needBlogs,pageable,needBlogs.size());
+    }
+
+
+
     @Override
     public PoBlog saveBlog(PoBlog blog) {
         return blogRepository.save(blog);
@@ -77,8 +115,8 @@ public class BlogServiceImpl implements BlogService {
 
     @Override
     public List<PoBlog> listRecommendBlogTop(Integer size) {
-        Sort sort= Sort.by(Sort.Direction.DESC,"updateTime");
-        Pageable pageable= PageRequest.of(0,size,sort);
+        Sort sort = Sort.by(Sort.Direction.DESC, "updateTime");
+        Pageable pageable = PageRequest.of(0, size, sort);
         return blogRepository.findTop(pageable);
     }
 }

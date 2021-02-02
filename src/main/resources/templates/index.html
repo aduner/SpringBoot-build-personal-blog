@@ -9,7 +9,7 @@
 
 <!-- 中间内容 -->
 <main class="m-container m-padded-tb-big">
-    <div class="ui container">
+    <div class="ui container" th:fragment="div-container">
         <div class="ui stackable grid">
             <!--左边博客列表-->
             <div class="eleven wide column">
@@ -20,7 +20,7 @@
                             <h3 class="ui blue header">博客</h3>
                         </div>
                         <div class="right aligned column">
-                            共 <h2 class="ui orange header m-inline-block m-text-thin" th:text="${page.totalElements}"> 14 </h2> 篇
+                            共 <h2 class="ui orange header m-inline-block m-text-thin" th:text="${page.totalElements}"></h2> 篇
                         </div>
                     </div>
                 </div>
@@ -54,12 +54,20 @@
                 </div>
 
                 <div class="ui bottom attached segment" th:if="${page.totalPages}>1">
-                    <div class="ui middle aligned two column grid">
+                    <div class="ui middle aligned two column grid" th:if="!${searchFlag}">
                         <div class="column">
-                            <a href="#" th:href="@{/(page=${page.number}-1)}"  th:unless="${page.first}" class="ui mini blue basic button">上一页</a>
+                            <a href="#" th:href="@{/home(page=${page.number}-1)}"  th:unless="${page.first}" class="ui mini blue basic button">上一页</a>
                         </div>
                         <div class="right aligned column">
-                            <a href="#" th:href="@{/(page=${page.number}+1)}"  th:unless="${page.last}" class="ui mini blue basic button">下一页</a>
+                            <a href="#" th:href="@{/home(page=${page.number}+1)}"  th:unless="${page.last}" class="ui mini blue basic button">下一页</a>
+                        </div>
+                    </div>
+                    <div class="ui middle aligned two column grid" th:if="${searchFlag}">
+                        <div class="column">
+                            <a href="#" th:href="${pageTemplates}+(${page.number}-1)"  th:unless="${page.first}" class="ui mini blue basic button">上一页</a>
+                        </div>
+                        <div class="right aligned column">
+                            <a href="#" th:href="${pageTemplates}+(${page.number}+1)"  th:unless="${page.last}" class="ui mini blue basic button">下一页</a>
                         </div>
                     </div>
                 </div>
@@ -83,7 +91,7 @@
                     </div>
                     <div class="ui blue segment">
                         <div class="ui fluid vertical menu">
-                            <a href="#" class="item" th:each="type : ${types}">
+                            <a href="#"  class="item search-type" th:each="type : ${types}" th:href="@{/search(typeId=${type.id},tagId=0)}">
                                 <span th:text="${type.name}"></span>
                                 <div class="ui blue basic left label" th:text="${#arrays.length(type.blogs)}"></div>
                             </a>
@@ -106,7 +114,7 @@
                         </div>
                     </div>
                     <div class="ui blue segment">
-                        <a href="#" th:each="tag : ${tags}"  class="ui blue basic left label m-margin-tb-tiny">
+                        <a href="#"  th:each="tag : ${tags}" th:href="@{/search(tagId=${tag.id},typeId=0)}" class="ui blue basic left label m-margin-tb-tiny search-tag">
                             <span th:text="${tag.name}"></span>
                             <div th:text="${#arrays.length(tag.blogs)}" class="detail"></div>
                         </a>
@@ -120,7 +128,7 @@
                         <i class="bookmark icon"></i>最新推荐
                     </div>
                     <div class="ui segment" th:each="blog : ${recommendBlogs}">
-                        <a href="#" th:href="@{/blog/{id}(id=${blog.id})}" target="_blank" class="m-black m-text-thin" th:text="${blog.title}"></a>
+                        <a href="#" th:href="@{/blog/{id}(id=${blog.id})}" target="_blank" class="m-black m-text-thin " th:text="${blog.title}"></a>
                     </div>
                 </div>
             </div>
