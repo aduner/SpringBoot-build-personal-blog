@@ -16,8 +16,8 @@
     <!--中间内容-->
     <div class="m-container-small m-padded-tb-big">
         <div class="ui container">
-            <div  class="ui form">
-                <input type="hidden" name="page" >
+            <div class="ui form">
+                <input type="hidden" name="page">
                 <div class="inline fields">
                     <div class="field">
                         <input type="text" name="title" placeholder="标题">
@@ -29,7 +29,8 @@
                                 <i class="dropdown icon"></i>
                                 <div class="default text">分类</div>
                                 <div class="menu">
-                                    <div th:each="type : ${types}" class="item" data-value="1" th:data-value="${type.id}" th:text="${type.name}"></div>
+                                    <div th:each="type : ${types}" class="item" data-value="1"
+                                         th:data-value="${type.id}" th:text="${type.name}"></div>
                                 </div>
                             </div>
                         </div>
@@ -43,51 +44,56 @@
                         </div>
                     </div>
                     <div class="field">
-                        <button  type="button" id="search-btn" class="ui mini teal basic button"><i class="search icon"></i>搜索</button>
+                        <button type="button" id="search-btn" class="ui mini teal basic button"><i
+                                class="search icon"></i>搜索
+                        </button>
+                        <a href="#" th:href="@{/admin/new}" class="ui mini right floated blue basic button">新增</a>
                     </div>
                 </div>
             </div>
-<div id="table-container">
-            <table th:fragment="blogList" class="ui compact table">
-                <thead>
-                <tr>
-                    <th></th>
-                    <th>标题</th>
-                    <th>类型</th>
-                    <th>推荐</th>
-                    <th>状态</th>
-                    <th>更新时间</th>
-                    <th>操作</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr th:each="blog,iterStat: ${page.content}" >
-                    <td th:text="${iterStat.count}"></td>
-                    <td th:text="${blog.title}"></td>
-                    <td th:text="${blog.type.name}"></td>
-                    <td th:text="${blog.recommend} ? '是':'否'"></td>
-                    <td th:text="${blog.published} ? '发布':'草稿'"  th:style="${blog.published} ? 'color: #016936;':'color: #B03060;'"></td>
-                    <td th:text="${blog.updateTime}"></td>
-                    <td>
-                        <a href="#" class="ui mini blue basic button" th:href="@{update(id=${blog.id})}">编辑</a>
-                        <a href="#" class="ui mini red basic button delete_blog" th:blog-id="${blog.id}">删除</a>
-                    </td>
-                </tr>
-                </tbody>
-                <tfoot>
-                <tr>
-                    <th colspan="7">
-                        <div class="ui mini pagination menu" th:if="${page.totalPages}>1" >
-                            <a onclick="page(this)" th:attr="data-page=${page.number}-1" class="item" th:unless="${page.first}">上一页</a>
-                            <a onclick="page(this)" th:attr="data-page=${page.number}+1" class=" item" th:unless="${page.last}">下一页</a>
-                        </div>
-                    </th>
-                </tr>
-                </tfoot>
-            </table>
+            <div id="table-container">
+                <table th:fragment="blogList" class="ui compact table">
+                    <thead>
+                    <tr>
+                        <th></th>
+                        <th>标题</th>
+                        <th>类型</th>
+                        <th>推荐</th>
+                        <th>状态</th>
+                        <th>更新时间</th>
+                        <th>操作</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="blog,iterStat: ${page.content}">
+                        <td th:text="${iterStat.count}"></td>
+                        <td th:text="${blog.title}"></td>
+                        <td th:text="${blog.type.name}"></td>
+                        <td th:text="${blog.recommend} ? '是':'否'"></td>
+                        <td th:text="${blog.published} ? '发布':'草稿'"
+                            th:style="${blog.published} ? 'color: #016936;':'color: #B03060;'"></td>
+                        <td th:text="${blog.updateTime}"></td>
+                        <td>
+                            <a href="#" class="ui mini blue basic button" th:href="@{update(id=${blog.id})}">编辑</a>
+                            <a href="#" class="ui mini red basic button delete_blog" th:blog-id="${blog.id}">删除</a>
+                        </td>
+                    </tr>
+                    </tbody>
+                    <tfoot>
+                    <tr>
+                        <th colspan="7">
+                            <div class="ui mini pagination menu" th:if="${page.totalPages}>1">
+                                <a onclick="page(this)" th:attr="data-page=${page.number}-1" class="item"
+                                   th:unless="${page.first}">上一页</a>
+                                <a onclick="page(this)" th:attr="data-page=${page.number}+1" class=" item"
+                                   th:unless="${page.last}">下一页</a>
+                            </div>
+                        </th>
+                    </tr>
+                    </tfoot>
+                </table>
 
-        </div>
-            <a href="#" th:href="@{/admin/new}" class="ui mini right floated blue basic button">新增</a>
+            </div>
         </div>
     </div>
 </main>
@@ -107,7 +113,7 @@
         $('.ui.modal.delete_blog_modal')
             .modal('show')
         ;
-        var id=$(e.target).attr('blog-id');
+        var id = $(e.target).attr('blog-id');
         $('#delete-blog-id').val(id);
     })
 
@@ -116,7 +122,7 @@
     });
 
     $('.ui.dropdown').dropdown({
-        on : 'hover'
+        on: 'hover'
     });
 
     //消息提示关闭初始化
@@ -128,7 +134,7 @@
         });
 
     $('#clear-btn')
-        .on('click', function() {
+        .on('click', function () {
             $('.ui.type.dropdown')
                 .dropdown('clear')
             ;
@@ -145,14 +151,15 @@
         $("[name='page']").val(0);
         loaddata();
     });
+
     function loaddata() {
-        if($("[name='typeId']").val()=="")
+        if ($("[name='typeId']").val() == "")
             $("[name='typeId']").val(0)
-        $("#table-container").load("[[@{/admin/blogs/search}]]",{
-            title : $("[name='title']").val(),
-            typeId : $("[name='typeId']").val(),
-            recommend : $("[name='recommend']").prop('checked'),
-            page : $("[name='page']").val()
+        $("#table-container").load("[[@{/admin/blogs/search}]]", {
+            title: $("[name='title']").val(),
+            typeId: $("[name='typeId']").val(),
+            recommend: $("[name='recommend']").prop('checked'),
+            page: $("[name='page']").val()
         });
     }
 

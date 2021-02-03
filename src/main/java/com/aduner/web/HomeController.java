@@ -33,7 +33,7 @@ public class HomeController {
     }
 
     @GetMapping("/home")
-    public String home(@PageableDefault(size = 8, sort = {"updateTime"}, direction = Sort.Direction.DESC) Pageable pageable, PoBlog blog,
+    public String home(@PageableDefault(size = 3, sort = {"updateTime"}, direction = Sort.Direction.DESC) Pageable pageable, PoBlog blog,
                        Model model) {
         model.addAttribute("page", blogService.listPublishBlog(pageable));
         model.addAttribute("types", typeService.listTypeTop(6));
@@ -67,10 +67,11 @@ public class HomeController {
         model.addAttribute("tags", tagService.listTagTop(10));
         model.addAttribute("recommendBlogs", blogService.listRecommendBlogTop(8));
         model.addAttribute("searchFlag",true);
-        model.addAttribute("pageTemplates",httpServletRequest.getRequestURL() +"?"+ httpServletRequest.getQueryString().replaceAll("&page=.+","")+"&page=");
+
         if (httpServletRequest.getMethod().equals("POST")) {
             return "index :: div-container";
         } else {
+            model.addAttribute("pageTemplates",httpServletRequest.getRequestURL() +"?"+ httpServletRequest.getQueryString().replaceAll("&page=.+","")+"&page=");
             return "index";
         }
     }
