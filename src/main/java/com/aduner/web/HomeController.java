@@ -33,7 +33,7 @@ public class HomeController {
     }
 
     @GetMapping("/home")
-    public String home(@PageableDefault(size = 2, sort = {"updateTime"}, direction = Sort.Direction.DESC) Pageable pageable, PoBlog blog,
+    public String home(@PageableDefault(size = 8, sort = {"updateTime"}, direction = Sort.Direction.DESC) Pageable pageable, PoBlog blog,
                        Model model) {
         model.addAttribute("page", blogService.listPublishBlog(pageable));
         model.addAttribute("types", typeService.listTypeTop(6));
@@ -45,7 +45,7 @@ public class HomeController {
     @RequestMapping("/search")
     public String search(
             @PageableDefault(
-                    size = 2,
+                    size = 8,
                     sort = {"updateTime"},
                     direction = Sort.Direction.DESC) Pageable pageable,
             PoBlog blog,

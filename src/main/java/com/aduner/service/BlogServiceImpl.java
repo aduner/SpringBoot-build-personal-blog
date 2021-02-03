@@ -13,10 +13,7 @@ import org.springframework.data.domain.*;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Predicate;
-import javax.persistence.criteria.Root;
+import javax.persistence.criteria.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -79,19 +76,19 @@ public class BlogServiceImpl implements BlogService {
     }
 
     @Override
-    public Page<PoBlog> listTagBlog(Pageable pageable,Long id) {
-        PoTag tag = tagRepository.findById(id).get();
-        // 排除非发布blog
-        List<PoBlog> needBlogs = new ArrayList<PoBlog>();
-        for (PoBlog blog : tag.getBlogs()) {
-            if (blog.isPublished()) {
-                needBlogs.add(blog);
+    public Page<PoBlog> listTagBlog(Pageable pageable,Long tagId) {
+        return blogRepository.findAll(new Specification<PoBlog>() {
+            @Override
+            public Predicate toPredicate(Root<PoBlog> root, CriteriaQuery<?> cq, CriteriaBuilder cb) {
+                List<Predicate> predicates = new ArrayList<>();
+                Join join = root.join("tags");
+                predicates.add(cb.equal(join.get("id"),tagId));
+                predicates.add(cb.equal(root.<Boolean>get("published"),true));
+                cq.where(predicates.toArray(new Predicate[predicates.size()]));
+                return null;
             }
-        }
-        tag.setBlogs(needBlogs);
-        return new PageImpl<PoBlog>(needBlogs,pageable,needBlogs.size());
+        },pageable);
     }
-
 
 
     @Override
