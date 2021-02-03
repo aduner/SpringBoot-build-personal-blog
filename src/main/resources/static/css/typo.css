@@ -227,8 +227,9 @@
 .typo h1,.typo  h2,.typo  h3,.typo  h4,.typo  h5,.typo  h6 {
   font-family: PingFang SC, Verdana, Helvetica Neue, Microsoft Yahei, Hiragino Sans GB, Microsoft Sans Serif, WenQuanYi Micro Hei, sans-serif;
   font-weight: 100;
-  color: #000;
+  color: #154360 ;
   line-height: 1.35;
+  font-weight: 800;
 }
 
 /* 标题应该更贴紧内容，并与其他块区分，margin 值要相应做优化 */

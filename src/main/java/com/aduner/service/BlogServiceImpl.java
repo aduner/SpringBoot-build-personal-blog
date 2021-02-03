@@ -6,12 +6,14 @@ import com.aduner.exception.NotFoundException;
 import com.aduner.po.PoBlog;
 import com.aduner.po.PoTag;
 import com.aduner.po.PoType;
+import com.aduner.util.MarkdownUtils;
 import com.aduner.util.MyBeanUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.*;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.criteria.*;
 import java.util.ArrayList;
@@ -115,5 +117,20 @@ public class BlogServiceImpl implements BlogService {
         Sort sort = Sort.by(Sort.Direction.DESC, "updateTime");
         Pageable pageable = PageRequest.of(0, size, sort);
         return blogRepository.findTop(pageable);
+    }
+
+    @Transactional
+    @Override
+    public PoBlog getAndConvert(Long id) {
+        PoBlog blog = blogRepository.getOne(id);
+        if (blog == null) {
+            throw new NotFoundException("该博客不存在");
+        }
+        PoBlog b = new PoBlog();
+        BeanUtils.copyProperties(blog,b);
+        String content = b.getContent();
+        b.setContent(MarkdownUtils.markdownToHtmlExtensions(content));
+        blogRepository.updateViews(id);
+        return b;
     }
 }

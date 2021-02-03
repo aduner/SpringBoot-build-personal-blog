@@ -7,7 +7,7 @@
     <nav class="ui inverted attached segment m-padded-tb-mini m-shadow-small" >
         <div class="ui container">
             <div class="ui inverted secondary stackable menu">
-                <h2 class="ui blue header item">管理后台</h2>
+                <a th:href="@{/home}"><h2 class="ui blue header item">管理后台</h2></a>
                 <a href="#" th:href="@{/admin/blogs}" class="m-item item m-mobile-hide" th:classappend="${n==1} ? 'active'">博客</a>
                 <a href="#" th:href="@{/admin/types}" class="m-item item m-mobile-hide" th:classappend="${n==2} ? 'active'">分类</a>
                 <a href="#" th:href="@{/admin/tags}" class="m-item item m-mobile-hide" th:classappend="${n==3} ? 'active'">标签</a>

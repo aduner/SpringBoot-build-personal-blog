@@ -85,10 +85,7 @@ public class HomeController {
         return "archives";
     }
 
-    @GetMapping("/blog")
-    public String blog() {
-        return "blog";
-    }
+
 
     @GetMapping("/tags")
     public String tags() {
