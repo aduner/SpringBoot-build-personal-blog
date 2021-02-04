@@ -33,7 +33,7 @@ public class HomeController {
     }
 
     @GetMapping("/home")
-    public String home(@PageableDefault(size = 3, sort = {"updateTime"}, direction = Sort.Direction.DESC) Pageable pageable, PoBlog blog,
+    public String home(@PageableDefault(size = 6, sort = {"updateTime"}, direction = Sort.Direction.DESC) Pageable pageable, PoBlog blog,
                        Model model) {
         model.addAttribute("page", blogService.listPublishBlog(pageable));
         model.addAttribute("types", typeService.listTypeTop(6));
@@ -57,10 +57,8 @@ public class HomeController {
             blog.setType(typeService.getType(typeId));
         }
         if (tagId != null && tagId != 0) {
-            Page p = blogService.listTagBlog(pageable, tagId);
             model.addAttribute("page", blogService.listTagBlog(pageable, tagId));
         } else {
-            Page p = blogService.listPublishBlog(pageable, blog);
             model.addAttribute("page", blogService.listPublishBlog(pageable, blog));
         }
         model.addAttribute("types", typeService.listTypeTop(6));
@@ -76,25 +74,4 @@ public class HomeController {
         }
     }
 
-    @GetMapping("/about")
-    public String about() {
-        return "about";
-    }
-
-    @GetMapping("/archives")
-    public String archives() {
-        return "archives";
-    }
-
-
-
-    @GetMapping("/tags")
-    public String tags() {
-        return "tags";
-    }
-
-    @GetMapping("/types")
-    public String types() {
-        return "types";
-    }
 }

@@ -60,16 +60,20 @@ public class TypeServiceImpl implements TypeService {
         Sort sort = Sort.by(Sort.Direction.DESC,"blogs.size");
         Pageable pageable = PageRequest.of(0,size,sort);
         List<PoType> types=typeRepository.findTop(pageable);
-        // 排除非发布blog
-        for(PoType type:types){
+        List<PoType> result=new ArrayList<PoType>();
+        // 排除非发布blog和博客数量为0的type
+        for(PoType type:types) {
             List<PoBlog> needBlogs = new ArrayList<PoBlog>();
-            for(PoBlog blog:type.getBlogs()){
-                if(blog.isPublished()) {
+            for (PoBlog blog : type.getBlogs()) {
+                if (blog.isPublished()) {
                     needBlogs.add(blog);
                 }
             }
             type.setBlogs(needBlogs);
+            if(type.getBlogs().size()>0){
+                result.add(type);
+            }
         }
-        return types;
+        return result;
     }
 }

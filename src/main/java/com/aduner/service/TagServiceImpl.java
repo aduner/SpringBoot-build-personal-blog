@@ -76,7 +76,8 @@ public class TagServiceImpl implements TagService {
         Sort sort= Sort.by(Sort.Direction.DESC,"blogs.size");
         Pageable pageable= PageRequest.of(0,size,sort);
         List<PoTag> tags=tagRepository.findTop(pageable);
-        // 排除非发布blog
+        List<PoTag> result=new ArrayList<PoTag>();
+        // 排除非发布blog和博客数量为0的tag
         for(PoTag tag:tags){
             List<PoBlog> needBlogs = new ArrayList<PoBlog>();
             for(PoBlog blog:tag.getBlogs()){
@@ -85,7 +86,10 @@ public class TagServiceImpl implements TagService {
                 }
             }
             tag.setBlogs(needBlogs);
+            if(tag.getBlogs().size()>0){
+                result.add(tag);
+            }
         }
-        return tags;
+        return result;
     }
 }
