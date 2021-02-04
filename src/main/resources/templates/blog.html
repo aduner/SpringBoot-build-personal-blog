@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="">
 <head>
-    <title>博客详情</title>
+    <title th:text="${blog.title}"></title>
     <th:block th:replace="common_base::common_header"/>
     <link rel="stylesheet" th:href="@{css/typo.css}">
     <link rel="stylesheet" th:href="@{css/animate.css}">
