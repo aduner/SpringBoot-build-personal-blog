@@ -14,17 +14,22 @@ public class PoComment {
     @Id
     @GeneratedValue
     private Long id;
-    private String userName;
+    private String nickname;
     private String email;
     private String content;
-    private String avatar;
     @Temporal(TemporalType.TIMESTAMP)
     private Date createTime;
     @ManyToOne
     private PoBlog blog;
     @ManyToOne
     private PoComment replyComment;
+    @OneToMany(mappedBy = "parentComment")
+    private List<PoComment> replyComments = new ArrayList<>();
     @OneToMany(mappedBy = "replyComment")
-    private List<PoComment> parentComment=new ArrayList<>( );
+    private List<PoComment> parentComments=new ArrayList<>( );
+    @ManyToOne
+    private PoComment parentComment;
+    private boolean adminComment;
+
 
 }
