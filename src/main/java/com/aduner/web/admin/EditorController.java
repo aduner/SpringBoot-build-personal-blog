@@ -21,6 +21,9 @@ import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Blog编辑控制器
+ */
 @Controller
 @RequestMapping("/admin")
 public class EditorController {
@@ -31,6 +34,11 @@ public class EditorController {
     @Autowired
     private BlogService blogService;
 
+    /**
+     * 新建blog，转到blog编辑页面
+     * @param model
+     * @return
+     */
     @GetMapping("/new")
     public String newBlog(Model model) {
         model.addAttribute("types", typeService.listType());
@@ -38,6 +46,12 @@ public class EditorController {
         return "admin/new_blog";
     }
 
+    /**
+     * 更新blog，转到blog编辑页面，自动填入已有内容
+     * @param id
+     * @param model
+     * @return
+     */
     @GetMapping("/update")
     public String updateBlog(@RequestParam("id") Long id, Model model) {
         PoBlog blog = blogService.getBlog(id);
@@ -57,6 +71,13 @@ public class EditorController {
         return "admin/update_blog";
     }
 
+    /**
+     * 编辑blog，对博客对新建或更改进行处理
+     * @param blog
+     * @param attributes
+     * @param session
+     * @return
+     */
     @PostMapping("/editor")
     public String editor(PoBlog blog, RedirectAttributes attributes, HttpSession session) {
         blog.setUser((PoUser) session.getAttribute("user"));

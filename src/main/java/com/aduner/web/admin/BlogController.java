@@ -14,6 +14,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+/**
+ * 后台blog控制器
+ */
 @Controller
 @RequestMapping("/admin")
 public class BlogController {
@@ -22,7 +25,13 @@ public class BlogController {
     @Autowired
     private TypeService typeService;
 
-
+    /**
+     * 展示blog
+     * @param pageable
+     * @param blog
+     * @param model
+     * @return
+     */
     @GetMapping("/blogs")
     public String blogs(@PageableDefault(
                         size = 10,
@@ -35,12 +44,25 @@ public class BlogController {
         return "admin/blog_list";
     }
 
+    /**
+     * 删除blog
+     * @param id
+     * @return
+     */
     @PostMapping("/blog/delete")
     public String delete(@RequestParam("id") Long id){
         blogService.deleteBlog(id);
         return  "redirect:/admin/blogs";
     }
 
+    /**
+     * 搜索blog
+     * @param pageable
+     * @param blog
+     * @param model
+     * @param typeId
+     * @return
+     */
     @PostMapping("/blogs/search")
     public String search(
             @PageableDefault(

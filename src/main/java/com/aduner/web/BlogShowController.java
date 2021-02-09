@@ -21,6 +21,12 @@ public class BlogShowController {
     @Autowired
     private TagService tagService;
 
+    /**
+     * blog详情展示页
+     * @param id
+     * @param model
+     * @return
+     */
     @GetMapping
     public String blog(@RequestParam("id") Long id, Model model) {
         model.addAttribute("blog", blogService.getAndConvert(id));

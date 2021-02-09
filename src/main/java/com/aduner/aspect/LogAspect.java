@@ -11,7 +11,14 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 
-
+/**
+ *采用SpringBoot中的AOP进行日志处理，AOP可以以切面的形式拦截，将日志内容记录下来，这里记录以下日志信息：
+ * 访问的URL
+ * 访问者的IP
+ * 访问时调用的方法
+ * 访问时传递的参数
+ * 访问时返回的内容
+ */
 @Aspect
 @Component
 public class LogAspect {

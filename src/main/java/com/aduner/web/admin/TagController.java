@@ -14,12 +14,21 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+/**
+ * 标签控制器
+ */
 @Controller
 @RequestMapping("/admin")
 public class TagController {
     @Autowired
     private TagService tagService;
 
+    /**
+     * 跳转至管理标签页
+     * @param pageable
+     * @param model
+     * @return
+     */
     @GetMapping("/tags")
     public String blogTags(
             @PageableDefault(
@@ -32,6 +41,12 @@ public class TagController {
         return "admin/blog_tags";
     }
 
+    /**
+     * 添加标签
+     * @param tag
+     * @param attributes
+     * @return
+     */
     @PostMapping("/tags/add")
     public String addTag(PoTag tag, RedirectAttributes attributes) {
         tag.setName(tag.getName().strip());
@@ -43,6 +58,11 @@ public class TagController {
         return "redirect:/admin/tags";
     }
 
+    /**
+     * 删除标签
+     * @param id
+     * @return
+     */
     @GetMapping("/tags/delete")
     public String tagsDelete(@RequestParam("id") Long id) {
         tagService.deleteTag(id);

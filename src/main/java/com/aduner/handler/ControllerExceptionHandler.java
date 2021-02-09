@@ -10,6 +10,10 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 
+/**
+ * 拦截器
+ * 如果不是已经定义的错误都返回error页面
+ */
 @ControllerAdvice
 public class ControllerExceptionHandler {
     private final Logger logger = LoggerFactory.getLogger(this.getClass());

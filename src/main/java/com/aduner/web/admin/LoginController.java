@@ -12,6 +12,9 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpSession;
 
+/**
+ * 登陆控制器
+ */
 @Controller
 @RequestMapping("/admin")
 public class LoginController {
@@ -23,6 +26,14 @@ public class LoginController {
         return "admin/login";
     }
 
+    /**
+     * 登陆
+     * @param username 账号
+     * @param password 密码
+     * @param session 回话
+     * @param attributes 用于返回信息
+     * @return
+     */
     @PostMapping("/login")
     public String login(@RequestParam String username,
                         @RequestParam String password,

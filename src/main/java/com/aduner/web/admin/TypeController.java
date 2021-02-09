@@ -15,12 +15,21 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+/**
+ * 分类控制器
+ */
 @Controller
 @RequestMapping("/admin")
 public class TypeController {
     @Autowired
     private TypeService typeService;
 
+    /**
+     * 跳转至管理types分类页面
+     * @param pageable
+     * @param model
+     * @return
+     */
     @GetMapping("/types")
     public String blogTypes(
             @PageableDefault(
@@ -33,6 +42,12 @@ public class TypeController {
         return "admin/blog_types";
     }
 
+    /**
+     * 添加分类
+     * @param type
+     * @param attributes
+     * @return
+     */
     @PostMapping("/types/add")
     public String addType(PoType type, RedirectAttributes attributes) {
         type.setName(type.getName().strip());
@@ -44,6 +59,11 @@ public class TypeController {
         return "redirect:/admin/types";
     }
 
+    /**
+     * 删除分类
+     * @param id
+     * @return
+     */
     @GetMapping("/types/delete")
     public String typesDelete(@RequestParam("id") Long id) {
         typeService.deleteType(id);

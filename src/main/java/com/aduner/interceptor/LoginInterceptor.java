@@ -6,6 +6,10 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+/**
+ * 继承HandlerInterceptorAdapter适配器，重写预处理方法preHandle
+ * 对session进行判断，看是否有用户，没有的话重定向到登录页面
+ */
 public class LoginInterceptor implements HandlerInterceptor {
 
     @Override

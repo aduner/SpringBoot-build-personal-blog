@@ -11,6 +11,13 @@ import org.springframework.web.servlet.HandlerExceptionResolver;
 import org.springframework.web.servlet.config.annotation.*;
 
 import java.util.List;
+
+/**
+ * Web设置，后台拦截器
+ * @Configuration注解：表明是一个有效的配置类
+ * 实现WebMvcConfigurer接口，重写addInterceptors方法
+ * 指定要拦截的路径，这里拦截"admin"访问路径
+ */
 @Configuration  
 public class WebConfig implements WebMvcConfigurer {
     @Override

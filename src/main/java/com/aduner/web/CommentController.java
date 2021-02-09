@@ -13,7 +13,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import javax.servlet.http.HttpSession;
-
+/**
+ * 评论控制器
+ */
 @Controller
 public class CommentController {
 
@@ -23,15 +25,24 @@ public class CommentController {
     @Autowired
     private BlogService blogService;
 
-
-
+    /**
+     * 刷新评论区
+     * @param blogId
+     * @param model
+     * @return
+     */
     @GetMapping("/comments/{blogId}")
     public String comments(@PathVariable Long blogId, Model model) {
         model.addAttribute("comments", commentService.listCommentByBlogId(blogId));
         return "blog :: commentList";
     }
 
-
+    /**
+     * 提交评论
+     * @param comment
+     * @param session
+     * @return
+     */
     @PostMapping("/comments")
     public String post(PoComment comment,HttpSession session) {
         Long blogId = comment.getBlog().getId();
