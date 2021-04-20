@@ -20,10 +20,10 @@ public class ControllerExceptionHandler {
     @ExceptionHandler
     public ModelAndView exceptionHandler(HttpServletRequest req,Exception e) throws Exception {
         logger.error("Request Url: {}  Exception: {} ",req.getRequestURI(),e);
+        // 如果错误不是已经定义的错误
         if(AnnotationUtils.findAnnotation(e.getClass(), ResponseStatus.class)!=null){
             throw e;
         }
-
         ModelAndView mav=new ModelAndView();
         mav.addObject("url",req.getRequestURI());
         mav.addObject("exception",e);
